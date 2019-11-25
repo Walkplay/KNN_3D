@@ -46,15 +46,6 @@ namespace UIElements
                 }).AddTo(this);
         }
 
-        //IEnumerator Expand(float maxValue)
-        //{
-        //    while (Vector3.Distance(pointer_arrow.transform.position, targetPos.position) > float.Epsilon)
-        //    {
-        //        pointer_arrow.transform.position = Vector3.Lerp(pointer_arrow.transform.position, targetPos.position, PointerSpeed * Time.deltaTime);
-        //        pointer_bg.transform.position = Vector3.Lerp(pointer_bg.transform.position, targetPos.position, PointerSpeed * Time.deltaTime);
-        //        yield return new WaitForEndOfFrame();
-        //    }
-
-        //}
+        
     }
 }
