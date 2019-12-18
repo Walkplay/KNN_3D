@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Assets.Source.UI.WindowHandler;
+using Data;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using UniRx;
-using Data;
 
 namespace Assets.Source.UI
 {
-    public class CreatePointView : MonoBehaviour
+    public class CreatePointView : AbstractView, ICreatePointView
     {
         [SerializeField] private InputField _nameIF;
         [SerializeField] private InputField _typeIF;
@@ -21,6 +19,10 @@ namespace Assets.Source.UI
         [SerializeField] private Button _closeBtn;
 
         public Subject<Point> NewPointCreated = new Subject<Point>();
+
+        public CreatePointView(IWindowHandler windowHandler)
+        {
+        }
 
         private void OnEnable()
         {
@@ -35,7 +37,7 @@ namespace Assets.Source.UI
                                         float.Parse(_yPosIF.text),
                                         float.Parse(_zPosIF.text),
                                         _typeIF.text == string.Empty ? -1 : int.Parse(_typeIF.text)))
-                .Subscribe(point => 
+                .Subscribe(point =>
                 {
                     NewPointCreated.OnNext(point);
                     gameObject.SetActive(false);
@@ -54,6 +56,11 @@ namespace Assets.Source.UI
             _xPosIF.text = string.Empty;
             _yPosIF.text = string.Empty;
             _zPosIF.text = string.Empty;
+        }
+
+        public void Close()
+        {
+            throw new NotImplementedException();
         }
     }
 }

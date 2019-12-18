@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using UniRx;
 
 namespace Assets.Source.UI.Effects
 {
@@ -16,26 +15,28 @@ namespace Assets.Source.UI.Effects
         private Coroutine _slideCoroutine;
         private RectTransform _rt;
 
-        void Start()
+        private void Start()
         {
             _rt = GetComponent<RectTransform>();
             _toggle.ObserveEveryValueChanged(toggle => toggle.isOn)
                 .Subscribe(isOn =>
                 {
                     if (_slideCoroutine != null)
+                    {
                         StopCoroutine(_slideCoroutine);
-                    _slideCoroutine = StartCoroutine(SlideTo(isOn ? _endPosition: _startPosition));
+                    }
+
+                    _slideCoroutine = StartCoroutine(SlideTo(isOn ? _endPosition : _startPosition));
                 }).AddTo(this);
         }
 
-        IEnumerator SlideTo(Vector3 endPosition)
+        private IEnumerator SlideTo(Vector3 endPosition)
         {
             while (Vector3.Distance(_rt.anchoredPosition3D, endPosition) > float.Epsilon)
             {
                 _rt.anchoredPosition3D = Vector3.Lerp(_rt.anchoredPosition3D, endPosition, _speed * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }
-
         }
     }
 }
