@@ -1,19 +1,27 @@
-﻿using System;
+﻿using Data;
+using Modules.Holders.PointHolder;
+using System;
 
 namespace Assets.Source.UI
 {
     public class CreatePointController : AbstractContoller<ICreatePointView>, IDisposable
     {
-        private readonly ICreatePointView _view;
 
-        public CreatePointController(ICreatePointView view) : base(view)
+        public CreatePointController(ICreatePointView view, IPointHolder pointHolder) : base(view)
         {
-            _view = view;
+            concreteView.AddNewPoint += pointHolder.Push;
+        }
+
+        private void SavePoint(Point point)
+        {
+
         }
 
         public void Dispose()
         {
-            _view.Close();
+            base.Dispose();
+
+            concreteView.AddNewPoint -= SavePoint;
         }
     }
 }

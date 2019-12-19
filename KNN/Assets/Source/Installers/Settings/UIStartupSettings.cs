@@ -47,6 +47,12 @@ public class UIStartupSettings : ScriptableObjectInstaller<UIStartupSettings>, I
                 Container.Bind<CreatePointController>().AsSingle();
                 var createPointController = Container.Instantiate<CreatePointController>();
                 return new Contractor<ICreatePointView>(createPoint, createPointController);
+            case EWindowType.TopBar:
+                var topbar = Container.InstantiatePrefabForComponent<TopBarView>(prefabDictionary[type].prefab, parent);
+                Container.Bind<ITopBarView>().FromInstance(topbar).AsSingle();
+                Container.Bind<TopBarController>().AsSingle();
+                var topBarController = Container.Instantiate<TopBarController>();
+                return new Contractor<ITopBarView>(topbar, topBarController);
             default:
                 return null;
         }

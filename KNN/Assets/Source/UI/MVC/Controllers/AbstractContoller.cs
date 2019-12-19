@@ -11,7 +11,7 @@ namespace Assets.Source.UI
             concreteView = view;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             concreteView.Close();
         }

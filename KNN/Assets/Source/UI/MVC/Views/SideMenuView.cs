@@ -10,8 +10,8 @@ namespace Assets.Source.UI
 {
     public class SideMenuView : AbstractView, ISideMenuView
     {
-        [SerializeField] private readonly RectTransform UnclassifiedContent;
-        [SerializeField] private readonly RectTransform ClassifiedContent;
+        [SerializeField] private RectTransform UnclassifiedContent;
+        [SerializeField] private RectTransform ClassifiedContent;
         [SerializeField] private Button AddNewBtn;
 
         private PointListUnit pointUnit;
@@ -22,7 +22,7 @@ namespace Assets.Source.UI
         private void Start()
         {
             points = new List<PointListUnit>();
-            pointUnit = Resources.Load<PointListUnit>("Prefabs/PointListUnit"); // TODO: Refactor!!
+            pointUnit = Resources.Load<PointListUnit>("Prefabs/UI/PointListUnit"); // TODO: Refactor!!
             OpenWindowEvent += TEst;
             AddNewBtn.onClick.AddListener(() => OpenWindowEvent?.Invoke(EWindowType.CreatePoint));
         }
@@ -51,9 +51,27 @@ namespace Assets.Source.UI
             points.Add(unit);
         }
 
+        private void ClearContent(RectTransform content)
+        {
+            foreach (RectTransform rectT in content)
+            {
+                Destroy(rectT.gameObject);
+            }
+        }
+
         public void Close()
         {
             Destroy(transform);
+        }
+
+        public void RefreshContent(Point[] unclassified, Point[] classified)
+        {
+            ClearContent(UnclassifiedContent);
+            ClearContent(ClassifiedContent);
+            foreach (var point in unclassified)
+                AddPointUnit(point);
+            foreach (var point in classified)
+                AddPointUnit(point);
         }
     }
 }

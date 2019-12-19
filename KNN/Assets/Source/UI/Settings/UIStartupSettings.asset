@@ -22,3 +22,7 @@ MonoBehaviour:
       type: 3}
     ownCanvas: 0
     enableOnStart: 0
+  - prefab: {fileID: 7379226917383126579, guid: b7b4f5796c2d86c44b22e5a6bb57cadd,
+      type: 3}
+    ownCanvas: 0
+    enableOnStart: 1

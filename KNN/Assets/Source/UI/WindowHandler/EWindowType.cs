@@ -3,6 +3,7 @@
     public enum EWindowType
     {
         SideMenu,
-        CreatePoint
+        CreatePoint,
+        TopBar
     }
 }

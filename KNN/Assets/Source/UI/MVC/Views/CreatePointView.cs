@@ -18,7 +18,8 @@ namespace Assets.Source.UI
         [SerializeField] private Button _addBtn;
         [SerializeField] private Button _closeBtn;
 
-        public Subject<Point> NewPointCreated = new Subject<Point>();
+        public event Action<Point> AddNewPoint;
+        private int counter = 0;
 
         public CreatePointView(IWindowHandler windowHandler)
         {
@@ -31,21 +32,21 @@ namespace Assets.Source.UI
 
         private void Start()
         {
-            _addBtn.OnClickAsObservable()
-                .Select(unit => new Point(_nameIF.text,
-                                        float.Parse(_xPosIF.text),
-                                        float.Parse(_yPosIF.text),
-                                        float.Parse(_zPosIF.text),
-                                        _typeIF.text == string.Empty ? -1 : int.Parse(_typeIF.text)))
-                .Subscribe(point =>
-                {
-                    NewPointCreated.OnNext(point);
-                    gameObject.SetActive(false);
-                })
-                .AddTo(this);
+            _addBtn.onClick.AddListener(() => {
+                string name = _nameIF.text;
+                if (name == string.Empty && _typeIF.text != string.Empty) name = $"c{_typeIF.text}";
+                if (name == string.Empty) name = $"p{counter}";
+                AddNewPoint?.Invoke(new Point(name,
+                                           _xPosIF.text == string.Empty ? 0 : float.Parse(_xPosIF.text),
+                                            _yPosIF.text == string.Empty ? 0 : float.Parse(_yPosIF.text),
+                                            _zPosIF.text == string.Empty ? 0 : float.Parse(_zPosIF.text),
+                                            _typeIF.text == string.Empty ? -1 : int.Parse(_typeIF.text)));
+                                        });
+            _addBtn.onClick.AddListener(Hide);
+            _addBtn.onClick.AddListener(() => counter++);
 
             _closeBtn.OnClickAsObservable()
-                .Subscribe(next => gameObject.SetActive(false))
+                .Subscribe(next => Hide())
                 .AddTo(this);
         }
 
@@ -58,9 +59,5 @@ namespace Assets.Source.UI
             _zPosIF.text = string.Empty;
         }
 
-        public void Close()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

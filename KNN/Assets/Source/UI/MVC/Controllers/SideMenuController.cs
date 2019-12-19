@@ -1,4 +1,5 @@
 ﻿using Assets.Source.UI.WindowHandler;
+using Modules.Holders.PointHolder;
 using UnityEngine;
 
 namespace Assets.Source.UI
@@ -7,16 +8,12 @@ namespace Assets.Source.UI
     {
         private readonly IWindowHandler _windowHandler;
 
-        public SideMenuController(ISideMenuView sideMenuView, IWindowHandler windowHandler) : base(sideMenuView)
+        public SideMenuController(ISideMenuView sideMenuView, IWindowHandler windowHandler, IPointHolder pointHolder) : base(sideMenuView)
         {
             _windowHandler = windowHandler;
+            pointHolder.holderUpdate += concreteView.RefreshContent;
             sideMenuView.OpenWindowEvent += _windowHandler.OpenWindow;
-            sideMenuView.OpenWindowEvent += Log;
         }
 
-        private void Log(EWindowType str)
-        {
-            Debug.Log("[Contoller] " + str);
-        }
     }
 }
