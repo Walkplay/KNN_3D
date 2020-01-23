@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7422adab9304be4aa870180b1c549b3, type: 3}
+  m_Name: UIStartupSettings
+  m_EditorClassIdentifier: 
+  defaultCanvasPrefab: {fileID: 6756597720020574543, guid: 25e2965ec01301944acf11bb845974c8,
+    type: 3}
+  ContextUIList:
+  - prefab: {fileID: 349823688142752813, guid: 3bf60c770eaffb3498e902cca3fc2da4, type: 3}
+    ownCanvas: 0
+    enableOnStart: 1
+  - prefab: {fileID: 5572082389592789799, guid: 5c67c615f8d199f488df1d55d9e78842,
+      type: 3}
+    ownCanvas: 0
+    enableOnStart: 0
+  - prefab: {fileID: 7379226917383126579, guid: b7b4f5796c2d86c44b22e5a6bb57cadd,
+      type: 3}
+    ownCanvas: 0
+    enableOnStart: 1
