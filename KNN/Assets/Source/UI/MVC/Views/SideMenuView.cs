@@ -14,6 +14,7 @@ namespace Assets.Source.UI
         [SerializeField] private RectTransform ClassifiedContent;
         [SerializeField] private Button AddNewBtn;
 
+
         private PointListUnit pointUnit;
         private List<PointListUnit> points;
 

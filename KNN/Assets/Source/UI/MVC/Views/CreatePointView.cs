@@ -17,6 +17,9 @@ namespace Assets.Source.UI
         [SerializeField] private InputField _zPosIF;
         [SerializeField] private Button _addBtn;
         [SerializeField] private Button _closeBtn;
+        [Space]
+        private Spawner spawner;
+
 
         public event Action<Point> AddNewPoint;
         private int counter = 0;
@@ -32,6 +35,7 @@ namespace Assets.Source.UI
 
         private void Start()
         {
+            spawner = GameObject.FindGameObjectWithTag("Respawn").GetComponent<Spawner>();
             _addBtn.onClick.AddListener(() => {
                 string name = _nameIF.text;
                 if (name == string.Empty && _typeIF.text != string.Empty) name = $"c{_typeIF.text}";
@@ -44,6 +48,10 @@ namespace Assets.Source.UI
                                         });
             _addBtn.onClick.AddListener(Hide);
             _addBtn.onClick.AddListener(() => counter++);
+            _addBtn.onClick.AddListener(() => spawner.SpawnHere(new Vector3(
+                _xPosIF.text == string.Empty ? 0 : float.Parse(_xPosIF.text),
+                _yPosIF.text == string.Empty ? 0 : float.Parse(_yPosIF.text),
+                _zPosIF.text == string.Empty ? 0 : float.Parse(_zPosIF.text))));
 
             _closeBtn.OnClickAsObservable()
                 .Subscribe(next => Hide())
